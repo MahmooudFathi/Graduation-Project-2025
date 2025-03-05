@@ -9,7 +9,7 @@ import Logo from "../../img/logo.png";
 const ip = "40.127.8.41";
 const loginUser = async (inputs) => {
   const response = await axios.post(
-    `http://${ip}/api/auth/login`,
+    `https://${ip}/api/auth/login`,
     inputs
   );
   return response.data;
