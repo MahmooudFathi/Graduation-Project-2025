@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUserProfile = async () => {
     if (!user?.token) throw new Error("No token found");
-    const response = await axios.get(`http://${ip}/api/users/me`, {
+    const response = await axios.get(`https://${ip}/api/users/me`, {
       headers: { Authorization: `Bearer ${user.token}` },
     });
     return response.data;
