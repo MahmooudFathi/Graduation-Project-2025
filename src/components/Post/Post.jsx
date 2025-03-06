@@ -46,17 +46,18 @@ const Post = ({ data }) => {
   };
 
   function formatUsername(username) {
-    if (!username) return ""; // تجنب الأخطاء عند تمرير قيمة فارغة
+  if (!username) return ""; // تجنب الأخطاء عند تمرير قيمة فارغة
 
-    // تحويل أول حرف (سواء كان رقمًا أو حرفًا) إلى كبير
-    let formattedUsername =
-      username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
+  // تحويل أول حرف في كل كلمة إلى حرف كبير
+  let formattedUsername = username
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 
-    // حذف الأرقام في نهاية النص فقط
-    formattedUsername = formattedUsername.replace(/\d+$/, "");
+  // حذف الأرقام في نهاية النص فقط
+  formattedUsername = formattedUsername.replace(/\d+$/, "");
 
-    return formattedUsername;
-  }
+  return formattedUsername;
+}
 
   // ✅ إغلاق القائمة عند الضغط خارجها
   useEffect(() => {
