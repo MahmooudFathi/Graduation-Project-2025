@@ -10,11 +10,13 @@ const ip = "40.127.8.41";
 function formatUsername(username) {
   if (!username) return ""; // تجنب الأخطاء عند تمرير قيمة فارغة
 
-  let formattedUsername = username.replace(/[0-9]/g, "");
+  // تحويل أول حرف في كل كلمة إلى حرف كبير
+  let formattedUsername = username
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 
-  formattedUsername =
-    formattedUsername.charAt(0).toUpperCase() +
-    formattedUsername.slice(1).toLowerCase();
+  // حذف الأرقام في نهاية النص فقط
+  formattedUsername = formattedUsername.replace(/\d+$/, "");
 
   return formattedUsername;
 }
