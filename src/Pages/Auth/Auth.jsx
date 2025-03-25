@@ -183,6 +183,11 @@ const Auth = () => {
                 ? "Sign Up"
                 : "Login"}
             </button>
+            {mutation.isError && (
+            <p style={{ color: "red" }}>
+              ❌ {mutation.error?.message || "Login failed. Please try again."}
+            </p>
+          )}
           </div>
         </form>
       </div>
