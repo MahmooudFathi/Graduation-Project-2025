@@ -6,6 +6,7 @@ import axios from "axios";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { useEffect, useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { MdMoreVert } from "react-icons/md";
 import toast from "react-hot-toast";
 import { FaPen, FaReply } from "react-icons/fa";
 import { useAuth } from "../../Context/AuthContext";
@@ -126,6 +127,8 @@ const Comments = ({ postId }) => {
   const [expandedComments, setExpandedComments] = useState(new Set());
   const [editContent, setEditContent] = useState("");
   const { userData } = useAuth();
+  const [menuOpenId, setMenuOpenId] = useState(null);
+  const menuRef = useRef(null);
 
   const { data: comments = [], isPending } = useQuery({
     queryKey: ["comments", postId],
@@ -166,6 +169,18 @@ const Comments = ({ postId }) => {
       }, 0);
     }
   }, [replyTo]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpenId(null);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const addCommentMutation = useMutation({
     mutationFn: postComment,
@@ -544,18 +559,36 @@ const Comments = ({ postId }) => {
                     ))}
               </div>
             </div>
-            <div className="more">
-              <FaPen
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setEditMode(comment._id);
-                  setEditContent(comment.content);
+            <div className="menu-container">
+              <MdMoreVert
+                className="icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMenuOpenId(
+                    menuOpenId === comment._id ? null : comment._id
+                  );
                 }}
+                
               />
-              <IoClose
-                style={{ cursor: "pointer" }}
-                onClick={() => handleDeleteComment(comment._id)}
-              />
+              {menuOpenId === comment._id && (
+                <div ref={menuRef} className="post-menu">
+                  <div
+                    className="menu-item"
+                    onClick={() => {
+                      setEditMode(comment._id);
+                      setEditContent(comment.content);
+                    }}
+                  >
+                    <FaPen className="icon" /> Edit
+                  </div>
+                  <div
+                    className="menu-item"
+                    onClick={() => handleDeleteComment(comment._id, comment.parentCommentId)}
+                  >
+                    <IoClose className="icon" /> Delete
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ))}
