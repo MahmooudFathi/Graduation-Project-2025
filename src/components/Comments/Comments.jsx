@@ -568,7 +568,6 @@ const Comments = ({ postId }) => {
                     menuOpenId === comment._id ? null : comment._id
                   );
                 }}
-                
               />
               {menuOpenId === comment._id && (
                 <div ref={menuRef} className="post-menu">
@@ -577,13 +576,17 @@ const Comments = ({ postId }) => {
                     onClick={() => {
                       setEditMode(comment._id);
                       setEditContent(comment.content);
+                      setMenuOpenId(null);
                     }}
                   >
                     <FaPen className="icon" /> Edit
                   </div>
                   <div
                     className="menu-item"
-                    onClick={() => handleDeleteComment(comment._id, comment.parentCommentId)}
+                    onClick={() => {
+                      setMenuOpenId(null);
+                      handleDeleteComment(comment._id, comment.parentCommentId);
+                    }}
                   >
                     <IoClose className="icon" /> Delete
                   </div>
