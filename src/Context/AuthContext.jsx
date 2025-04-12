@@ -36,6 +36,8 @@ export const AuthProvider = ({ children }) => {
     queryKey: ["userProfile", user?.token],
     queryFn: fetchUserProfile,
     enabled: !!user?.token, // تشغيل الجلب فقط إذا كان هناك مستخدم مسجل
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 10,
     onError: () => logout(), // تسجيل الخروج إذا فشل الجلب
   });
 
