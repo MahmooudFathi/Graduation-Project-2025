@@ -6,10 +6,10 @@ import { useAuth } from "../../Context/AuthContext";
 import "./Auth.css";
 import Logo from "../../img/logo.png";
 
-const loginUser = async (inputs) => {
+const loginUser = async ({ email, password }) => {
   const response = await axios.post(
     "https://graduation.amiralsayed.me/api/auth/login",
-    inputs
+    { email, password }
   );
   return response.data;
 };
@@ -38,8 +38,10 @@ const Auth = () => {
   const mutation = useMutation({
     mutationFn: isSignUp ? registerUser : loginUser,
     onSuccess: (data) => {
-      if (!data.token || !data.user?.id) throw new Error("Invalid response");
-      login(data.token, data.user.id);
+      const token = data.token || data.registrationToken;
+      const userId = data.user?.id || data.newUser?.id;
+      if (!token || !userId) throw new Error("Invalid response");
+      login(token, userId);
       navigate("/");
     },
     onError: (error) => {
@@ -51,16 +53,20 @@ const Auth = () => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+ const handleSubmit = (e) => {
     e.preventDefault();
-    if (isSignUp && inputs.password !== inputs.confirmpass) {
-      setConfirmPass(false);
-      return;
+    if (isSignUp) {
+      if (inputs.password !== inputs.confirmpass) {
+        setConfirmPass(false);
+        return;
+      }
+      mutation.mutate(inputs);
     } else {
-      setConfirmPass(true);
+      const { email, password } = inputs;
+      mutation.mutate({ email, password });
     }
-    mutation.mutate(inputs);
-  };
+    setConfirmPass(true);
+ };
 
   const resetForm = () => {
     setInputs({
@@ -100,7 +106,7 @@ const Auth = () => {
               />
               <input
                 required
-                type="text"
+                type="tel"
                 placeholder="Phone Number"
                 className="infoInput"
                 name="phoneNumber"
@@ -184,10 +190,13 @@ const Auth = () => {
                 : "Login"}
             </button>
             {mutation.isError && (
-            <p style={{ color: "red" }}>
-              ❌ {mutation.error?.message || "Login failed. Please try again."}
-            </p>
-          )}
+              <p style={{ color: "red" }}>
+                ❌{" "}
+                {mutation.error?.response?.data?.message ||
+                  mutation.error?.message ||
+                  `${isSignUp ? "Sign Up" : "Login"} failed. Please try again.`}
+              </p>
+            )}
           </div>
         </form>
       </div>
