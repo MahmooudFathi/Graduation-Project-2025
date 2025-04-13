@@ -37,12 +37,20 @@ const Auth = () => {
 
   const mutation = useMutation({
     mutationFn: isSignUp ? registerUser : loginUser,
+    retry: false,
     onSuccess: (data) => {
-      const token = data.token || data.registrationToken;
-      const userId = data.user?.id || data.newUser?.id;
-      if (!token || !userId) throw new Error("Invalid response");
-      login(token, userId);
-      navigate("/");
+      if (isSignUp) {
+        // After successful signup, switch to login form
+        setIsSignUp(false);
+        resetForm();
+      } else {
+        // For login, proceed as before
+        const token = data.token || data.registrationToken;
+        const userId = data.user?.id || data.newUser?.id;
+        if (!token || !userId) throw new Error("Invalid response");
+        login(token, userId);
+        navigate("/");
+      }
     },
     onError: (error) => {
       console.error(`${isSignUp ? "Sign Up" : "Login"} failed:`, error);
@@ -53,7 +61,7 @@ const Auth = () => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
- const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (isSignUp) {
       if (inputs.password !== inputs.confirmpass) {
@@ -66,7 +74,7 @@ const Auth = () => {
       mutation.mutate({ email, password });
     }
     setConfirmPass(true);
- };
+  };
 
   const resetForm = () => {
     setInputs({
