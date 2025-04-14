@@ -1,9 +1,9 @@
 export const isTokenExpired = () => {
   const loginTime = localStorage.getItem("loginTime");
-  if (!loginTime) return true; 
+  if (!loginTime) return true;  
 
-  const ONE_HOUR = 60 * 60 * 1000; 
+  const Quarter_HOUR = 15 * 60 * 1000; 
   const currentTime = Date.now();
 
-  return currentTime - loginTime > ONE_HOUR; 
+  return currentTime - loginTime > Quarter_HOUR; // تحقق من مرور 15 دقيقة
 };
