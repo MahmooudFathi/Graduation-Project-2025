@@ -12,6 +12,16 @@ import toast from "react-hot-toast";
 function App() {
   const navigate = useNavigate();
 
+    // تحقق من التوكن عند تحميل الصفحة
+  useEffect(() => {
+    if (isTokenExpired()) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("loginTime");
+      toast.info("Session expired. Please log in again.");
+      navigate("/auth");
+    }
+  }, [navigate]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (isTokenExpired()) {
