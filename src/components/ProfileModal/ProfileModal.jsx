@@ -40,7 +40,7 @@ function ProfileModal({ modalOpened, setModalOpened }) {
       return response.data;
     },
     onSuccess: (data) => {
-      setUser((prev) => ({ ...prev, userName: data.user.userName }));
+      setUser((prev) => ({ ...prev, userName: data.userName }));
       queryClient.invalidateQueries(["user"]);
       toast.success("Username updated successfully! 🎉");
     },
@@ -88,7 +88,7 @@ function ProfileModal({ modalOpened, setModalOpened }) {
       return response.data;
     },
     onSuccess: (data) => {
-      setUser((prev) => ({ ...prev, avatarUrl: data.user.avatarUrl }));
+      setUser((prev) => ({ ...prev, avatarUrl: data.avatarUrl }));
       queryClient.invalidateQueries(["user"]);
       toast.success("Avatar updated successfully! 🎉");
     },
@@ -115,7 +115,7 @@ function ProfileModal({ modalOpened, setModalOpened }) {
       return response.data;
     },
     onSuccess: (data) => {
-      setUser((prev) => ({ ...prev, coverUrl: data.user.coverUrl }));
+      setUser((prev) => ({ ...prev, coverUrl: data.coverUrl }));
       queryClient.invalidateQueries(["user"]);
       toast.success("Cover updated successfully! 🎉");
     },
