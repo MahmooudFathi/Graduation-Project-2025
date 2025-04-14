@@ -38,6 +38,12 @@ export const AuthProvider = ({ children }) => {
     enabled: !!user?.token, // تشغيل الجلب فقط إذا كان هناك مستخدم مسجل
     staleTime: 1000 * 60 * 5,
     cacheTime: 1000 * 60 * 10,
+    onSuccess: (data) => {
+      setUser((prev) => ({
+        ...prev,
+        ...data.user, // نضيف كل بيانات المستخدم
+      }));
+    },
     onError: () => logout(), // تسجيل الخروج إذا فشل الجلب
   });
 
@@ -49,14 +55,25 @@ export const AuthProvider = ({ children }) => {
     onError: () => logout(), // تسجيل الخروج إذا فشل الجلب
   });
 
-  const login = (token, userId) => {
+  const login = async (token, userId) => {
     localStorage.setItem("token", token);
     localStorage.setItem("userId", userId);
     localStorage.setItem("loginTime", Date.now());
-    setUser({ token, userId });
-    // تحديث البيانات بعد تسجيل الدخول
-    queryClient.invalidateQueries(["userProfile"]);
-    queryClient.invalidateQueries(["users"]);
+  
+    try {
+      const { data } = await axios.get(
+        "https://graduation.amiralsayed.me/api/users/me",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+  
+      setUser({ token, userId, ...data.user }); // حفظ كل البيانات داخل user
+      queryClient.invalidateQueries(["userProfile"]);
+      queryClient.invalidateQueries(["users"]);
+    } catch (error) {
+      logout(); // لو حصل مشكلة أثناء جلب البيانات
+    }
   };
 
   const logout = () => {
