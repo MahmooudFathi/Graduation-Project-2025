@@ -30,31 +30,39 @@ const fetchPosts = async (scope, isProfilePage, userId) => {
     ? `https://graduation.amiralsayed.me/api/posts/user/${userId}`
     : "https://graduation.amiralsayed.me/api/posts";
 
-  const res = await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    params: isProfilePage
-      ? {}
-      : {
-          page: 1,
-          limit: 10,
-          scope,
-        },
-  });
+  try {
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: isProfilePage
+        ? {}
+        : {
+            page: 1,
+            limit: 10,
+            scope,
+          },
+    });
 
-  const posts = res.data.data;
+    const posts = res.data.data;
 
-  // جلب بيانات المستخدم لكل منشور
-  const postsWithUserData = await Promise.all(
-    posts.map(async (post) => {
-      const userId = post.author; // ✅ استخدام author بدلاً من userId
-      const userData = await fetchUser(userId);
-      return { ...post, user: userData };
-    })
-  );
+    // جلب بيانات المستخدم لكل منشور
+    const postsWithUserData = await Promise.all(
+      posts.map(async (post) => {
+        const userId = post.author; // ✅ استخدام author بدلاً من userId
+        const userData = await fetchUser(userId);
+        return { ...post, user: userData };
+      })
+    );
 
-  return postsWithUserData;
+    return postsWithUserData;
+  } catch (error) {
+    if (isProfilePage && error.response?.status === 404) {
+      // المستخدم لسه معندوش بوستات
+      return []; // ✅ رجّع Array فاضية بدال ما ترمي Error
+    }
+    throw error; // أي خطأ تاني نرميه عادي
+  }
 };
 
 const Posts = ({ scope }) => {
@@ -63,8 +71,8 @@ const Posts = ({ scope }) => {
   const isProfilePage = location.pathname.startsWith("/profile");
 
   const { data, isLoading, error } = useQuery({
-    queryKey: isProfilePage ? ["userPosts", userId] :["posts", scope], // ✅ نفس المفتاح المستخدم في PostShare.jsx
-    queryFn: () => fetchPosts(scope,isProfilePage, userId),
+    queryKey: isProfilePage ? ["userPosts", userId] : ["posts", scope], // ✅ نفس المفتاح المستخدم في PostShare.jsx
+    queryFn: () => fetchPosts(scope, isProfilePage, userId),
     staleTime: 5000,
     retry: false,
   });
@@ -74,11 +82,17 @@ const Posts = ({ scope }) => {
 
   return (
     <div className="Posts">
-      {data
-        ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .map((post, index) => (
-          <Post data={post} id={index} key={post._id || index} />
-        ))}
+      {isProfilePage && data.length === 0 ? (
+        <div className="no-posts-message">
+          <p>No Posts yet.</p>
+        </div>
+      ) : (
+        data
+          ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .map((post, index) => (
+            <Post data={post} id={index} key={post._id || index} />
+          ))
+      )}
     </div>
   );
 };
