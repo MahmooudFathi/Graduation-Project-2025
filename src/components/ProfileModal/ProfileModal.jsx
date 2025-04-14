@@ -11,6 +11,7 @@ import {
   FormLabel,
   Input,
   useColorModeValue,
+  Textarea,
 } from "@chakra-ui/react";
 import React, { useState, useRef } from "react";
 import { useAuth } from "../../Context/AuthContext";
@@ -22,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 function ProfileModal({ modalOpened, setModalOpened }) {
   const { user, setUser } = useAuth();
   const [username, setUsername] = useState(user?.userName || "");
+  const [bio, setBio] = useState(user?.bio || "");
   const avatarInputRef = useRef(null);
   const coverInputRef = useRef(null);
   const queryClient = useQueryClient();
@@ -45,6 +47,27 @@ function ProfileModal({ modalOpened, setModalOpened }) {
     onError: (error) => {
       toast.error(
         `Error: ${error.response?.data?.message || "Failed to update username"}`
+      );
+    },
+  });
+
+  const updateBioMutation = useMutation({
+    mutationFn: async (newBio) => {
+      const response = await axios.put(
+        "https://graduation.amiralsayed.me/api/users/me/bio",
+        { newBio },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      );
+      return response.data;
+    },
+    onSuccess: (data) => {
+      setUser((prev) => ({ ...prev, bio: data.bio }));
+      queryClient.invalidateQueries(["user"]);
+      toast.success("Bio updated successfully! 📝");
+    },
+    onError: (error) => {
+      toast.error(
+        `Error: ${error.response?.data?.message || "Failed to update bio"}`
       );
     },
   });
@@ -76,7 +99,7 @@ function ProfileModal({ modalOpened, setModalOpened }) {
     },
   });
 
-  // ✅ ميوتيشن لتحديث الصورة الشخصية
+  // ✅ ميوتيشن لتحديث الصورة الخلفية
   const updateCoverMutation = useMutation({
     mutationFn: async (coverFile) => {
       const formData = new FormData();
@@ -111,14 +134,18 @@ function ProfileModal({ modalOpened, setModalOpened }) {
       promises.push(updateUsernameMutation.mutateAsync(username));
     }
 
-    const file1 = avatarInputRef.current?.files[0];
-    if (file1) {
-      promises.push(updateAvatarMutation.mutateAsync(file1));
+    if (bio.trim() && bio !== user.bio) {
+      promises.push(updateBioMutation.mutateAsync(bio));
     }
 
-    const file2 = coverInputRef.current?.files[0];
-    if (file2) {
-      promises.push(updateCoverMutation.mutateAsync(file2));
+    const avatarFile = avatarInputRef.current?.files[0];
+    if (avatarFile) {
+      promises.push(updateAvatarMutation.mutateAsync(avatarFile));
+    }
+
+    const coverFile = coverInputRef.current?.files[0];
+    if (coverFile) {
+      promises.push(updateCoverMutation.mutateAsync(coverFile));
     }
 
     // تشغيل التحديثات معًا
@@ -152,6 +179,14 @@ function ProfileModal({ modalOpened, setModalOpened }) {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="User Name"
+            />
+          </FormControl>
+          <FormControl mt={4}>
+            <FormLabel>Bio</FormLabel>
+            <Textarea
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              placeholder="Write something about yourself..."
             />
           </FormControl>
           <FormControl mt={4}>
