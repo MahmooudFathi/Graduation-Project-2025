@@ -9,7 +9,8 @@ import Logo from "../../img/logo.png";
 const loginUser = async ({ email, password }) => {
   const response = await axios.post(
     "https://graduation.amiralsayed.me/api/auth/login",
-    { email, password }
+    { email, password },
+    { headers: { "Content-Type": "application/json" } }
   );
   return response.data;
 };
@@ -17,7 +18,8 @@ const loginUser = async ({ email, password }) => {
 const registerUser = async ({ fullName, phoneNumber, email, password }) => {
   const response = await axios.post(
     "https://cms-central-ffb6acaub5afeecj.uaenorth-01.azurewebsites.net/api/Auth/register",
-    { fullName, phoneNumber, email, password }
+    { fullName, phoneNumber, email, password },
+    { headers: { "Content-Type": "application/json" } }
   );
   return response.data;
 };
