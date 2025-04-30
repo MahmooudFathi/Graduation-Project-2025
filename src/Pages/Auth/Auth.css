@@ -1,0 +1,187 @@
+.Auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 4rem;
+  position: relative;
+  padding: 1rem;
+}
+
+.Auth > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.a-left {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.a-left > img {
+  width: 15rem;
+  height: 15rem;
+}
+
+.Webname > h1 {
+  font-size: 3rem;
+  background-image: var(--buttonBg);
+  color: var(--textColor);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+
+.Webname > h6 {
+  font-size: 0.9rem;
+  color: var(--textColor);
+}
+
+/* نموذج الإدخال */
+.a-right{
+  background-color: var(--cardColor);
+  border-radius: 1rem;
+}
+.infoForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.infoForm > h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--textColor);
+}
+
+/* تحسين إدخال النصوص */
+.infoInput {
+  width: 100%;
+  border: 1px solid var(--borderColor);
+  outline: none;
+  background-color: var(--inputColor);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+  color: var(--textColor);
+}
+
+.infoInput:focus {
+  border-color: #48a6a7;
+  box-shadow: 0 0 5px #48a6a7;
+}
+
+.infoButton {
+  width: 7rem;
+  height: 2.5rem;
+  align-self: center;
+  background: var(--buttonBg);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.infoButton:hover {
+  background: var(--buttonHover);
+  border: 2px solid #2973b2;
+  transform: scale(1.05);
+}
+
+.authForm {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0px 4px 10px rgba(154, 203, 208, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.authForm > div {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .Auth {
+    flex-direction: column; /* Stack logo and form vertically */
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .a-left > img {
+    width: 12rem; /* Smaller logo */
+    height: 12rem;
+  }
+
+  .Webname > h1 {
+    font-size: 2.5rem; /* Smaller heading */
+  }
+
+  .Webname > h6 {
+    font-size: 0.8rem;
+  }
+
+  .authForm {
+    max-width: 350px; /* Slightly smaller form */
+  }
+}
+
+@media (max-width: 768px) {
+  .Auth {
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  .a-left > img {
+    width: 10rem; /* Even smaller logo */
+    height: 10rem;
+  }
+
+  .Webname > h1 {
+    font-size: 2rem;
+  }
+
+  .Webname > h6 {
+    font-size: 0.7rem;
+  }
+
+  .infoForm > h3 {
+    font-size: 1.4rem; /* Smaller form title */
+  }
+
+  .infoInput {
+    padding: 10px; /* Slightly smaller padding */
+    font-size: 0.9rem;
+  }
+
+  .infoButton {
+    width: 6rem; /* Smaller button */
+    height: 2.2rem;
+    font-size: 0.9rem;
+  }
+
+  .authForm {
+    max-width: 300px; /* Compact form */
+    padding: 1rem;
+  }
+
+  /* Adjust error message and toggle link */
+  .infoForm > span {
+    font-size: 11px;
+  }
+}

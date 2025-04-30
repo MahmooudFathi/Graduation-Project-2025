@@ -1,0 +1,75 @@
+:root {
+  --yellow: #48a6a7;
+  --orange: #2973b2;
+  --black: #2973b2;
+  --gray: rgba(72, 166, 167);
+  --profileShadow: 0px 4px 17px 2px rgba(154, 203, 208, 0.15);
+  --hrColor: #f2efe7;
+  --cardColor: rgba(222, 219, 211, 0.7);
+  --buttonBg: #48a6a4 ;
+  --inputColor: rgba(154, 203, 208, 0.2);
+  --photo: #48a6a7;
+  --video: #2973b2;
+  --location: #2973b2;
+  --shedule: #48a6a7;
+}
+
+.App {
+  overflow: hidden;
+  color: var(--black);
+  background: #f5f3ed;
+  padding: 0.5rem 1rem;
+}
+
+.blur {
+  position: absolute;
+  width: 22rem;
+  height: 14rem;
+  border-radius: 50%;
+  background: #9acbd0;
+  filter: blur(72px);
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: none;
+  border-radius: 0.6rem;
+  background: var(--buttonBg);
+  transition: all 100ms ease-out;
+}
+
+.button:hover {
+  cursor: pointer;
+  color: var(--orange);
+  background: transparent;
+  border: 2px solid var(--orange);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.icon-heart {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.icon-fill {
+  color: var(--orange);
+  cursor: pointer;
+}
+
+link {
+  text-decoration: "none";
+  color: "inherit";
+}

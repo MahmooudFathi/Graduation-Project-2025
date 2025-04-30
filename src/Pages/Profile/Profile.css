@@ -1,0 +1,44 @@
+.Profile {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18rem auto 20rem;
+  gap: 1rem;
+}
+
+.Profile-center {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  overflow: auto;
+}
+.RightSide {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .Profile {
+    grid-template-columns: 15rem auto;
+    padding-top: 4rem;
+  }
+
+  .RightSide {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .Profile {
+    grid-template-columns: 100%;
+  }
+
+  .Profile-center {
+    width: 100%;
+  }
+
+  .ProfileLeft {
+    display: none;
+  }
+}

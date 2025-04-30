@@ -1,0 +1,35 @@
+.Navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--cardColor);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.Navbar .icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.Navbar .icon:hover {
+  color: var(--primaryColor); 
+  transform: scale(1.1); 
+  transition: all 0.2s ease;
+}
+
+.Navbar .icon:active {
+  transform: scale(0.95); 
+}
+
+@media (max-width: 1024px) {
+  .Navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: -2px;
+    z-index: 100;
+    margin-bottom: 1rem;
+    border-radius: 0rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--cardColor);
+  }
+}

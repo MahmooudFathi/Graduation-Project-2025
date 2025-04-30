@@ -1,0 +1,41 @@
+.Home {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18rem auto 20rem;
+  gap: 1rem;
+}
+.ProfileSide {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  overflow: auto;
+}
+.RightSide {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* لما تكون الشاشة ميديام أو أصغر */
+@media (max-width: 1024px) {
+  .Home {
+    grid-template-columns: 15rem auto;
+    padding-top: 4rem;
+  }
+
+  .RightSide {
+    display: none;
+  }
+}
+
+/* لما تكون الشاشة صغيرة أكتر مثلا موبايل */
+@media (max-width: 768px) {
+  .Home {
+    grid-template-columns: 100%;
+  }
+
+  .ProfileSide {
+    display: none;
+  }
+}
