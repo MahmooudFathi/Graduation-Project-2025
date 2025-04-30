@@ -14,7 +14,8 @@ import ProfileImage from "../../img/pngtree-male-avatar-vector-icon-png-image_69
 import { format } from "timeago.js";
 import Comments from "../Comments/Comments";
 import toast from "react-hot-toast";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 const Post = ({ data }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -33,11 +34,12 @@ const Post = ({ data }) => {
   const [editMode, setEditMode] = useState(false);
   const [newCaption, setNewCaption] = useState(data.postCaption);
   const [isSaved, setIsSaved] = useState(data.saveList.includes(userId));
-  const [previewImageIndex, setPreviewImageIndex] = useState(null);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
   const menuRef = useRef(null);
   const textareaRef = useRef(null);
-  const previewRef = useRef(null);
   const toastId = useRef(null);
+  const lightboxRef = useRef(null); 
   const queryClient = useQueryClient();
   const token = localStorage.getItem("token");
 
@@ -73,25 +75,23 @@ const Post = ({ data }) => {
     };
   }, []);
 
-  // ⬅️ مستمع جديد لإغلاق المعاينة عند الضغط خارج الصورة
   useEffect(() => {
-    const handleClickOutsidePreview = (event) => {
+    const handleClickOutsideLightbox = (event) => {
       if (
-        previewImageIndex !== null &&
-        previewRef.current &&
-        !previewRef.current.contains(event.target) &&
-        !event.target.closest(".previewArrow") && // تجاهل النقر على الأسهم
-        !event.target.closest(".closePreview") // تجاهل النقر على زر الإغلاق
+        isLightboxOpen &&
+        lightboxRef.current &&
+        !lightboxRef.current.contains(event.target) &&
+        !event.target.closest(".closeLightbox")
       ) {
-        closeImagePreview();
+        setIsLightboxOpen(false);
       }
     };
-
-    document.addEventListener("mousedown", handleClickOutsidePreview);
+    document.addEventListener("mousedown", handleClickOutsideLightbox);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutsidePreview);
+      document.removeEventListener("mousedown", handleClickOutsideLightbox);
     };
-  }, [previewImageIndex]);
+  }, [isLightboxOpen]);
+
 
   const handleUpdateClick = (event) => {
     event.stopPropagation();
@@ -212,7 +212,8 @@ const Post = ({ data }) => {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) { // !e.shiftKey لمنع الإرسال عند الضغط على Shift + Enter
+    if (e.key === "Enter" && !e.shiftKey) {
+      // !e.shiftKey لمنع الإرسال عند الضغط على Shift + Enter
       e.preventDefault(); // منع الانتقال إلى سطر جديد
       handleUpdateCaption(); // استدعاء دالة الحفظ
     }
@@ -267,29 +268,22 @@ const Post = ({ data }) => {
       );
     },
   });
-  // دالة لفتح المعاينة عند الضغط على الصورة
-  const openImagePreview = (index) => {
-    setPreviewImageIndex(index);
+  // فتح Lightbox عند الضغط على صورة
+  const openLightbox = (index) => {
+    setStartIndex(index);
+    setIsLightboxOpen(true);
   };
 
-  // دالة لإغلاق المعاينة
-  const closeImagePreview = () => {
-    setPreviewImageIndex(null);
-  };
+  // تحويل الصور لصيغة react-image-gallery
+  const galleryImages = data.media.map((mediaItem) => ({
+    original: `https://graduation.amiralsayed.me${mediaItem.url}`,
+    thumbnail: `https://graduation.amiralsayed.me${mediaItem.url}`,
+  }));
 
-  // دالة للتنقل إلى الصورة التالية
-  const nextImage = () => {
-    if (previewImageIndex < data.media.length - 1) {
-      setPreviewImageIndex(previewImageIndex + 1);
-    }
-  };
+  // تحديد الصور اللي هتتعرض (٣ بس)
+  const displayedImages = data.media.slice(0, 3);
+  const extraImagesCount = data.media.length > 3 ? data.media.length - 3 : 0;
 
-  // دالة للتنقل إلى الصورة السابقة
-  const prevImage = () => {
-    if (previewImageIndex > 0) {
-      setPreviewImageIndex(previewImageIndex - 1);
-    }
-  };
   return (
     <>
       <div className="Post">
@@ -376,15 +370,26 @@ const Post = ({ data }) => {
             )}
             {data.media && data.media.length > 0 && (
               <div className="postImages">
-                {data.media.map((mediaItem, index) => (
-                  <img
+                {displayedImages.map((mediaItem, index) => (
+                  <div
                     key={index}
-                    loading="lazy"
-                    src={`https://graduation.amiralsayed.me${mediaItem.url}`}
-                    alt={`Post media ${index}`}
-                    className="postImage"
-                    onClick={() => openImagePreview(index)}
-                  />
+                    className="relative postImageContainer"
+                    onClick={() => openLightbox(index)}
+                  >
+                    <img
+                      loading="lazy"
+                      src={`https://graduation.amiralsayed.me${mediaItem.url}`}
+                      alt={`Post media ${index}`}
+                      className="postImage"
+                    />
+                    {index === 2 && extraImagesCount > 0 && (
+                      <div className="extraImagesOverlay">
+                        <span className="extraImagesText">
+                          +{extraImagesCount}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             )}
@@ -420,32 +425,21 @@ const Post = ({ data }) => {
           {commentOpen && <Comments postId={data._id} />}
         </div>
       </div>
-      {previewImageIndex !== null && (
-        <div className="imagePreviewModal">
-          <div className="imagePreviewContent" ref={previewRef}>
-            <IoClose className="closePreview" onClick={closeImagePreview} />
-            {data.media.length > 1 && (
-              <>
-                <IoIosArrowBack
-                  className={`previewArrow ${
-                    previewImageIndex === 0 ? "disabled" : ""
-                  }`}
-                  onClick={prevImage}
-                />
-                <IoIosArrowForward
-                  className={`previewArrow ${
-                    previewImageIndex === data.media.length - 1
-                      ? "disabled"
-                      : ""
-                  }`}
-                  onClick={nextImage}
-                />
-              </>
-            )}
-            <img
-              src={`https://graduation.amiralsayed.me${data.media[previewImageIndex].url}`}
-              alt="Preview"
-              className="previewImageFull"
+      {isLightboxOpen && (
+        <div className="lightboxModal">
+          <button
+            className="closeLightbox"
+            onClick={() => setIsLightboxOpen(false)}
+          >
+            ✕
+          </button>
+          <div className="lightboxContent" ref={lightboxRef}>
+            <ImageGallery
+              items={galleryImages}
+              startIndex={startIndex}
+              showThumbnails={true}
+              showPlayButton={false}
+              showFullscreenButton={false}
             />
           </div>
         </div>
