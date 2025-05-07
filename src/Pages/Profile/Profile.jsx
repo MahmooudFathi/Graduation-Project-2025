@@ -7,9 +7,12 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./Profile.css";
 const Profile = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+  const [isTablet, setIsTablet] = useState(window.innerWidth <= 768);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1024);
+      setIsTablet(window.innerWidth <= 768);
     };
 
     window.addEventListener("resize", handleResize);
@@ -19,9 +22,9 @@ const Profile = () => {
     <>
       {isMobile && <Navbar />}
       <div className="Profile">
-        <ProfileLeft />
+        {!isTablet && <ProfileLeft />}
         <div className="Profile-center">
-          <ProfileCard location="profilePage" />
+           <ProfileCard location="profilePage" />
           <PostSide />
         </div>
         <div className="RightSide">

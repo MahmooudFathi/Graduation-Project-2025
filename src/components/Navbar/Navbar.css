@@ -1,23 +1,47 @@
 .Navbar {
+  position: relative;
   display: flex;
   justify-content: space-around;
-  background-color: var(--cardColor);
+  align-items: center;
+  background-color: var(--backgroundCard);
   padding: 1rem;
   border-radius: 1rem;
+  box-shadow: var(--shadowLight);
 }
 
 .Navbar .icon {
   font-size: 1.5rem;
   cursor: pointer;
+  color: var(--textPrimary);
 }
 .Navbar .icon:hover {
-  color: var(--primaryColor); 
-  transform: scale(1.1); 
+  color: var(--deepBlue);
+  transform: scale(1.1);
   transition: all 0.2s ease;
 }
-
+body.dark .Navbar .icon:hover {
+  color: var(--textPrimary);
+}
 .Navbar .icon:active {
-  transform: scale(0.95); 
+  transform: scale(0.95);
+}
+.ProfileImage3 {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid var(--accentPhoto);
+}
+
+.dark-mode-toggle {
+  background: transparent;
+  color: var(--textPrimary);
+  font-size: 0.75rem;
+  padding: 0.4rem 0.6rem;
+  border: none;
+}
+
+.dark-mode-toggle:hover {
+  background: var(--backgroundInput);
 }
 
 @media (max-width: 1024px) {
@@ -29,7 +53,7 @@
     z-index: 100;
     margin-bottom: 1rem;
     border-radius: 0rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: var(--cardColor);
+    box-shadow: var(--shadowLight);
+    background-color: var(--backgroundCard);
   }
 }

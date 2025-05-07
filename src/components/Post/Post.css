@@ -1,17 +1,18 @@
 .Post {
   display: flex;
   padding: 1rem;
-  background-color: var(--cardColor);
+  background-color: var(--backgroundCard);
   border-radius: 1rem;
   /* border: 1px solid rgba(154, 203, 208, 0.5); */
   gap: 1rem;
-  box-shadow: 0 2px 8px rgba(154, 203, 208, 0.1);
+  box-shadow: var(--shadowLight);
 }
 
 .Post > img {
   border-radius: 50%;
   width: 3rem;
   height: 3rem;
+  border: 2px solid var(--accentPhoto);
 }
 
 .Post > div {
@@ -33,7 +34,7 @@
 }
 .p-date {
   font-size: 0.8rem;
-  color: var(--gray);
+  color: var(--secondaryText);
 }
 .name-detail > div > div {
   display: flex;
@@ -52,16 +53,56 @@
   align-items: center;
   gap: 10px;
   margin-top: 10px;
+  flex-wrap: wrap;
 }
 .postImageContainer {
   position: relative;
-  width: 33.33%;
   cursor: pointer;
+}
+/* Case 1: Single image */
+.postImages:has(> .postImageContainer:nth-child(1):nth-last-child(1)) {
+  display: block; /* Override flex to make it full width */
+}
+
+.postImages:has(> .postImageContainer:nth-child(1):nth-last-child(1))
+  .postImageContainer {
+  width: 100%; /* Full width for single image */
+}
+
+/* Case 2: Two images */
+.postImages:has(> .postImageContainer:nth-child(2):nth-last-child(1))
+  .postImageContainer {
+  width: calc(50% - 5px); /* Two images side by side, accounting for gap */
+}
+
+/* Case 3 or more images: Grid layout */
+.postImages:has(> .postImageContainer:nth-child(3)) {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns for grid */
+  gap: 10px;
+  width: 100%;
+}
+
+/* Adjust the width of images in the grid */
+.postImages:has(> .postImageContainer:nth-child(3)) .postImageContainer {
+  width: 100%; /* Each image takes full width of its grid cell */
+}
+
+/* For exactly 3 images: Adjust the layout to have the third image span both columns */
+.postImages:has(> .postImageContainer:nth-child(3):nth-last-child(1))
+  .postImageContainer:nth-child(3) {
+  grid-column: span 2; /* Third image spans both columns */
+}
+
+/* For 4 or more images: Limit to 4 images in the grid */
+.postImages:has(> .postImageContainer:nth-child(5))
+  .postImageContainer:nth-child(n + 5) {
+  display: none; /* Hide images beyond the 4th */
 }
 .postImage {
   width: 100%;
   max-height: 20rem;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 0.8rem;
 }
 .postImage:hover {
@@ -95,7 +136,7 @@
 .postReact > :nth-child(1) > span,
 .postReact > :nth-child(2) {
   font-size: 0.8rem;
-  color: var(--gray);
+  color: var(--secondaryText);
 }
 
 .menu-container {
@@ -105,9 +146,9 @@
   position: absolute;
   top: 30px;
   right: 0;
-  background: #f2efe7;
+  background: var(--backgroundCard);
   border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(154, 203, 208, 0.1);
+  box-shadow: var(--shadowLight);
   padding: 10px;
   width: 200px;
   z-index: 1000;
@@ -123,7 +164,7 @@
 }
 
 .menu-item:hover {
-  background: rgba(154, 203, 208, 0.2);
+  background: var(--backgroundInput);
 }
 .edit-container {
   width: 100%;
@@ -133,7 +174,7 @@
   width: 100%;
   min-height: 100px;
   padding: 8px;
-  border: 1px solid #9acbd0;
+  border: 1px solid var(--borderColor);
   border-radius: 6px;
   resize: vertical;
 }
@@ -146,13 +187,23 @@
   border: none;
   cursor: pointer;
   margin-right: 0.5rem;
+  transition: background-color 0.3s;
 }
+
 .save-btn {
-  background-color: #2973b2;
+  background-color: var(--buttonPrimary);
+}
+
+.save-btn:hover {
+  background-color: var(--backgroundInput);
 }
 
 .cancel-btn {
-  background-color: #48a6a7;
+  background-color: var(--backgroundInput);
+}
+
+.cancel-btn:hover {
+  background-color: var(--deepBlue);
 }
 
 .lightboxModal {
@@ -182,6 +233,11 @@
   cursor: pointer;
   background: none;
   border: none;
+  transition: color 0.3s;
+}
+
+.closeLightbox:hover {
+  color: var(--backgroundBase);
 }
 
 @media (max-width: 768px) {
@@ -200,6 +256,16 @@
 
   .postImages {
     gap: 8px;
+  }
+  /* Adjust for two images on smaller screens */
+  .postImages:has(> .postImageContainer:nth-child(2):nth-last-child(1))
+    .postImageContainer {
+    width: calc(50% - 4px); /* Adjust gap for smaller screens */
+  }
+
+  /* Adjust for three or more images on smaller screens */
+  .postImages:has(> .postImageContainer:nth-child(3)) {
+    gap: 8px; /* Adjust gap for smaller screens */
   }
   .closeLightbox {
     top: 10px;

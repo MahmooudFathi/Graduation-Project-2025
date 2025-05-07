@@ -1,0 +1,175 @@
+.usersTable {
+  flex: 1; /* Take remaining space */
+  background-color: var(--backgroundCard);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: var(--shadowLight);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.usersTable h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: var(--textPrimary);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--backgroundCard);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--divider);
+}
+
+th {
+  background-color: var(--backgroundInput);
+  font-weight: 600;
+  color: var(--secondaryText);
+}
+
+td img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accentPhoto);
+}
+
+td select {
+  padding: 5px;
+  border: 1px solid var(--borderColor);
+  border-radius: 5px;
+  background-color: var(--backgroundCard);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+td select:focus {
+  outline: none;
+  border-color: var(--textPrimary);
+}
+
+td button {
+  padding: 8px 12px;
+  background-color: var(--textPrimary);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+td button:hover {
+  background-color: var(--backgroundInput);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .usersTable h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  th,
+  td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  th {
+    font-size: 14px;
+  }
+
+  td img {
+    width: 40px;
+    height: 40px;
+  }
+
+  td select {
+    padding: 4px;
+    font-size: 12px;
+  }
+
+  td button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .usersTable {
+    padding: 10px;
+  }
+
+  .usersTable h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  /* تحويل الجدول لـ layout رأسي */
+  table {
+    display: block;
+    min-width: unset; /* إزالة العرض الأدنى */
+  }
+
+  thead {
+    display: none; /* إخفاء رأس الجدول */
+  }
+
+  tr {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: var(--backgroundCard);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  td {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5px;
+    align-items: center;
+    padding: 8px 5px;
+    font-size: 12px;
+    border-bottom: none;
+    text-align: left;
+  }
+
+  td::before {
+    content: attr(data-label); /* استخدام data-label لعرض اسم العمود */
+    font-weight: bold;
+    color: var(--secondaryText);
+    text-align: left;
+    margin-right: 10px;
+  }
+
+  td img {
+    width: 30px;
+    height: 30px;
+  }
+
+  td select {
+    padding: 3px;
+    font-size: 11px;
+  }
+
+  td button {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+}

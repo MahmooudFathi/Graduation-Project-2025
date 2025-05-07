@@ -164,25 +164,13 @@ const Auth = () => {
             )}
           </div>
 
-          <span
-            style={{
-              color: "red",
-              fontSize: "12px",
-              alignSelf: "flex-end",
-              marginRight: "5px",
-              display: confirmPass ? "none" : "block",
-            }}
-          >
+          <span className={`error-message ${confirmPass ? "hidden" : ""}`}>
             *Confirm password does not match
           </span>
 
           <div>
             <span
-              style={{
-                fontSize: "12px",
-                cursor: "pointer",
-                textDecoration: "underline",
-              }}
+              className="toggle-link"
               onClick={() => {
                 resetForm();
                 setIsSignUp((prev) => !prev);
@@ -205,7 +193,7 @@ const Auth = () => {
                 : "Login"}
             </button>
             {mutation.isError && (
-              <p style={{ color: "red" }}>
+              <p className="error-message">
                 ❌{" "}
                 {mutation.error?.response?.data?.message ||
                   mutation.error?.message ||

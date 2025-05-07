@@ -1,33 +1,43 @@
 :root {
-  --yellow: #48a6a7;
-  --orange: #2973b2;
-  --black: #2973b2;
-  --gray: rgba(72, 166, 167);
-  --profileShadow: 0px 4px 17px 2px rgba(154, 203, 208, 0.15);
-  --hrColor: #f2efe7;
-  --cardColor: rgba(222, 219, 211, 0.7);
-  --buttonBg: #48a6a4 ;
-  --inputColor: rgba(154, 203, 208, 0.2);
-  --photo: #48a6a7;
-  --video: #2973b2;
-  --location: #2973b2;
-  --shedule: #48a6a7;
+  --backgroundBase: #f2efe7;
+  --turquoise: #48a6a7;
+  --deepBlue: #2973b2;
+  --textPrimary: #2973b2;
+  --secondaryText: rgba(72, 166, 167, 0.7);
+  --shadowLight: 0px 4px 17px 2px rgba(154, 203, 208, 0.15);
+  --divider: #f2efe7;
+  --backgroundCard: rgba(222, 219, 211, 0.7);
+  --buttonPrimary: #48a6a4;
+  --backgroundInput: rgba(154, 203, 208, 0.2);
+  --accentPhoto: #48a6a7;
+  --accentVideo: #2973b2;
+  --accentLocation: #2973b2;
+  --accentSchedule: #48a6a7;
+  --borderColor: #9acbd0;
+  --buttonHover: transparent;
+}
+
+body.dark {
+  --backgroundBase: #1e557f;
+  --backgroundCard: #3a6a9f;
+  --backgroundInput: #6a8e91;
+  --textPrimary: #f2efe7;
+  --secondaryText: rgba(154, 203, 208, 0.8);
+  --buttonPrimary: linear-gradient(98.63deg, #48a6a7 0%, #9acbd0 100%);
+  --divider: rgba(154, 203, 208, 0.5);
+  --borderColor: rgba(154, 203, 208, 0.8);
+  --shadowLight: 0px 4px 17px 2px rgba(154, 203, 208, 0.25);
 }
 
 .App {
   overflow: hidden;
-  color: var(--black);
-  background: #f5f3ed;
+  color: var(--textPrimary);
+  background: var(--backgroundBase);
   padding: 0.5rem 1rem;
 }
 
-.blur {
-  position: absolute;
-  width: 22rem;
-  height: 14rem;
-  border-radius: 50%;
-  background: #9acbd0;
-  filter: blur(72px);
+body.dark .App {
+  background: var(--backgroundBase);
 }
 
 .button {
@@ -37,15 +47,20 @@
   color: white;
   border: none;
   border-radius: 0.6rem;
-  background: var(--buttonBg);
+  background: var(--buttonPrimary);
   transition: all 100ms ease-out;
 }
 
 .button:hover {
   cursor: pointer;
-  color: var(--orange);
+  color: var(--deepBlue);
   background: transparent;
-  border: 2px solid var(--orange);
+  border: 2px solid var(--deepBlue);
+}
+
+body.dark .button:hover {
+  color: var(--textPrimary);
+  border: 2px solid var(--textPrimary);
 }
 
 ::-webkit-scrollbar {
@@ -65,8 +80,12 @@
 }
 
 .icon-fill {
-  color: var(--orange);
+  color: var(--deepBlue);
   cursor: pointer;
+}
+
+body.dark .icon-fill {
+  color: var(--textPrimary);
 }
 
 link {

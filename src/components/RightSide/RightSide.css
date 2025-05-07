@@ -1,19 +1,29 @@
-.RightSide{
-    display: flex;
-    flex-direction: column;
+.RightSide {
+  display: flex;
+  flex-direction: column;
 }
 
-.navIcons{
-    background-color: var(--cardColor);
-    padding: 1rem;
-    border-radius: 1rem;
-    margin-top: 0rem;
-    display: flex;
-    justify-content: space-between;
+.navIcons {
+  background-color: var(--backgroundCard);
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-top: 0rem;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: var(--shadowLight);
 }
 
-.r-button{
-    height: 3rem;
-    width: 80%;
-    align-self: center;
+.r-button {
+  height: 3rem;
+  width: 80%;
+  align-self: center;
+  background-color: var(--buttonPrimary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.r-button:hover {
+  background: var(--backgroundInput);
 }

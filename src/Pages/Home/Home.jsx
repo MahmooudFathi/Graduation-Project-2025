@@ -7,9 +7,11 @@ import LogoSearch from "../../components/LogoSearch/LogoSearch";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 const Home = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+  const [isTablet, setIsTablet] = useState(window.innerWidth <= 768);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1024);
+      setIsTablet(window.innerWidth <= 768);
     };
 
     window.addEventListener("resize", handleResize);
@@ -21,7 +23,7 @@ const Home = () => {
       <div className="Home">
         <div className="ProfileSide">
           <LogoSearch />
-          <ProfileCard location="homepage" />
+          {!isTablet && <ProfileCard location="homepage" />}
         </div>
         <PostSide />
         <div className="RightSide">

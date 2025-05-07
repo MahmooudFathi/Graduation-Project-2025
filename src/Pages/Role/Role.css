@@ -1,0 +1,27 @@
+.Role {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.ProfileSideRole {
+  flex: 0 0 18rem; /* Fixed width for the profile sidebar */
+}
+
+@media (max-width: 768px) {
+  .Role {
+    flex-direction: column; /* جعل العناصر رأسية */
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .ProfileSideRole {
+    display: none; /* إخفاء الـ ProfileSideRole */
+  }
+}
+
+@media (max-width: 480px) {
+  .Role {
+    padding: 5px;
+  }
+}

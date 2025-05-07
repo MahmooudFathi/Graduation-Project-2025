@@ -72,24 +72,22 @@ const Posts = ({ scope }) => {
   const userId = localStorage.getItem("userId"); // احصل على `userId` المخزن
   const isProfilePage = location.pathname.startsWith("/profile");
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-    error,
-  } = useInfiniteQuery({
-    queryKey: isProfilePage ? ["userPosts", userId] : ["posts", scope],
-    queryFn: ({ pageParam = 1 }) =>
-      fetchPosts({ pageParam, scope, isProfilePage, userId }),
-    getNextPageParam: (lastPage) => lastPage.nextPage,
-    staleTime: 5000,
-  });
+  const { data, fetchNextPage, hasNextPage, isLoading, error } =
+    useInfiniteQuery({
+      queryKey: isProfilePage ? ["userPosts", userId] : ["posts", scope],
+      queryFn: ({ pageParam = 1 }) =>
+        fetchPosts({ pageParam, scope, isProfilePage, userId }),
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+      staleTime: 5000,
+    });
 
   if (isLoading) return <p className="loading">Loading posts...</p>;
   if (error)
     return (
-      <p>Error loading posts: {error.message} ,<strong> Please Refresh The Page</strong></p>
+      <p>
+        Error loading posts: {error.message} ,
+        <strong> Please Refresh The Page</strong>
+      </p>
     );
 
   const allPosts = data?.pages.flatMap((page) => page.posts) || [];
@@ -105,14 +103,17 @@ const Posts = ({ scope }) => {
           dataLength={allPosts.length}
           next={fetchNextPage}
           hasMore={!!hasNextPage}
-          loader={<h4 className="loader"><div></div></h4>}
+          loader={
+            <h4 className="loader">
+              <div></div>
+            </h4>
+          }
           endMessage={<p className="end-message">No more posts</p>}
           className="Posts"
         >
-          {allPosts
-            .map((post, index) => (
-              <Post data={post} id={index} key={post._id || index} />
-            ))}
+          {allPosts.map((post, index) => (
+            <Post data={post} id={index} key={post._id || index} />
+          ))}
         </InfiniteScroll>
       )}
     </div>
