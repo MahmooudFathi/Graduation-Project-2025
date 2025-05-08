@@ -20,7 +20,7 @@
 /* لما تكون الشاشة ميديام أو أصغر */
 @media (max-width: 1024px) {
   .Home {
-    grid-template-columns: 15rem auto;
+    grid-template-columns: 17rem auto;
     padding-top: 4rem;
   }
 
@@ -33,9 +33,5 @@
 @media (max-width: 768px) {
   .Home {
     grid-template-columns: 100%;
-  }
-
-  .ProfileSide {
-    display: none;
   }
 }

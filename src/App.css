@@ -30,7 +30,7 @@ body.dark {
 }
 
 .App {
-  overflow: hidden;
+  overflow: visible;
   color: var(--textPrimary);
   background: var(--backgroundBase);
   padding: 0.5rem 1rem;

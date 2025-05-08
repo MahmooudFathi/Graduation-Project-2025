@@ -1,6 +1,8 @@
 .LogoSearch {
   display: flex;
   position: relative;
+  width: 100%;
+  z-index: 1000;
 }
 .LogoSearch .logo {
   width: 2.5rem;
@@ -10,6 +12,7 @@
 
 .Search {
   display: flex;
+  width: 100%;
   background-color: var(--backgroundCard);
   border-radius: 0.6rem;
   padding: 5px;
@@ -21,7 +24,7 @@
 .Search::before {
   content: "";
   position: fixed;
-  top: 4.6rem;
+  top: 4.3rem;
   left: 0;
   right: 0;
   bottom: 0;
@@ -40,10 +43,10 @@
 }
 .Search > input {
   background-color: transparent;
+  width: 100%;
   border: 1px solid var(--borderColor);
   outline: none;
   color: var(--textPrimary);
-  min-width: 150px;
   padding: 5px;
   border-radius: 4px;
 }
@@ -61,14 +64,13 @@
   cursor: pointer;
 }
 
-
 /* Search Results Dropdown */
 .search-results {
   position: absolute;
   top: 100%;
-  left: -35px;
+  left: 0;
   right: 0;
-  width: 300px;
+  width: 100%;
   background-color: var(--backgroundCard);
   border-radius: 10px;
   box-shadow: var(--shadowLight);
@@ -76,16 +78,7 @@
   max-height: 400px;
   max-width: calc(100vw - 20px);
   overflow-y: auto;
-  z-index: 20;
-}
-
-/* For small screens, make it responsive */
-@media (max-width: 400px) {
-  .search-results {
-    width: calc(100vw - 40px);
-    left: 50%;
-    transform: translateX(-50%);
-  }
+  z-index: 2000;
 }
 
 .search-result-item {
@@ -157,4 +150,44 @@
 .Search:focus-within,
 .search-results {
   z-index: 10;
+}
+@media (max-width: 1024px) {
+  .Search::before {
+    top: 8rem;
+  }
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .Search::before {
+    top: 8rem;
+  }
+  .search-results {
+    /* position: absolute; */
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: calc(100vw - 20px);
+    margin: 0 auto;
+    transform: none;
+    z-index: 2000;
+  }
+}
+/* For small screens, make it responsive */
+@media (max-width: 400px) {
+  .search-results {
+    width: calc(100vw - 40px);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
 }
