@@ -16,6 +16,7 @@ import Comments from "../Comments/Comments";
 import toast from "react-hot-toast";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
+import { Link } from "react-router-dom";
 
 const Post = ({ data }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -39,7 +40,7 @@ const Post = ({ data }) => {
   const menuRef = useRef(null);
   const textareaRef = useRef(null);
   const toastId = useRef(null);
-  const lightboxRef = useRef(null); 
+  const lightboxRef = useRef(null);
   const queryClient = useQueryClient();
   const token = localStorage.getItem("token");
 
@@ -91,7 +92,6 @@ const Post = ({ data }) => {
       document.removeEventListener("mousedown", handleClickOutsideLightbox);
     };
   }, [isLightboxOpen]);
-
 
   const handleUpdateClick = (event) => {
     event.stopPropagation();
@@ -304,11 +304,13 @@ const Post = ({ data }) => {
           <div className="name-detail">
             <div>
               <div>
-                <b>
-                  {data.user?.localUserName
-                    ? formatUsername(data.user.localUserName)
-                    : "Loading..."}
-                </b>
+                <Link to={`/user/${data.user.centralUsrId}`}>
+                  <b>
+                    {data.user?.localUserName
+                      ? formatUsername(data.user.localUserName)
+                      : "Loading..."}
+                  </b>
+                </Link>
                 <MdVerified />
               </div>
               <div className="menu-container">

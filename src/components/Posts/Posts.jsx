@@ -2,7 +2,6 @@ import React from "react";
 import "./Posts.css";
 import axios from "axios";
 import Post from "../Post/Post";
-import { useLocation } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -67,10 +66,8 @@ const fetchPosts = async ({ pageParam = 1, scope, isProfilePage, userId }) => {
   }
 };
 
-const Posts = ({ scope }) => {
-  const location = useLocation();
-  const userId = localStorage.getItem("userId"); // احصل على `userId` المخزن
-  const isProfilePage = location.pathname.startsWith("/profile");
+const Posts = ({ scope, userId }) => {
+  const isProfilePage = !!userId;
 
   const { data, fetchNextPage, hasNextPage, isLoading, error } =
     useInfiniteQuery({

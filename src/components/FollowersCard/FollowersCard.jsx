@@ -3,6 +3,7 @@ import "./FollowersCard.css";
 import { useAuth } from "../../Context/AuthContext";
 import ProfileImage from "../../img/pngtree-male-avatar-vector-icon-png-image_691612.jpg";
 import { Followers } from "../../Data/FollowersData";
+import { Link } from "react-router-dom";
 const FollowersCard = () => {
   const { usersData, isUsersLoading, userData } = useAuth();
 
@@ -36,7 +37,11 @@ const FollowersCard = () => {
                   className="followerImage"
                 />
                 <div className="name">
-                  <span>{user.localUserName || user.userName}</span>
+                  <span>
+                    <Link to={`/user/${user.centralUsrId}`}>
+                      {user.localUserName || user.userName}
+                    </Link>
+                  </span>
                   <span>@{user.userName}</span>
                 </div>
               </div>

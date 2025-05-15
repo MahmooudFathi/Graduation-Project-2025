@@ -9,7 +9,7 @@
   box-shadow: var(--shadowLight);
   width: 100%;
   max-width: 25rem;
-  margin: 0 auto;
+  margin: 0 auto 1rem;
 }
 
 .profilePage .ProfileCard {

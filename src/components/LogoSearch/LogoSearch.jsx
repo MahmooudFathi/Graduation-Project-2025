@@ -3,6 +3,7 @@ import ProfileImage from "../../img/pngtree-male-avatar-vector-icon-png-image_69
 import { CiSearch } from "react-icons/ci";
 import { useQuery } from "@tanstack/react-query";
 import "./LogoSearch.css";
+import { Link } from "react-router-dom";
 
 const LogoSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -117,27 +118,29 @@ const LogoSearch = () => {
             ) : searchResults?.data?.length > 0 ? (
               <>
                 {searchResults.data.map((user) => (
-                  <div key={user._id} className="search-result-item">
-                    <img
-                      loading="lazy"
-                      src={
-                        user.avatarUrl
-                          ? `https://graduation.amiralsayed.me${user.avatarUrl}`
-                          : ProfileImage
-                      }
-                      alt={user.localUserName}
-                      className="search-avatar"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = ProfileImage;
-                      }}
-                    />
-                    <div className="user-info">
-                      <div className="user-name">{user.localUserName}</div>
-                      <div className="user-username">@{user.userName}</div>
-                      {user.bio && <div className="user-bio">{user.bio}</div>}
+                  <Link to={`/user/${user.centralUsrId}`} key={user._id}>
+                    <div className="search-result-item">
+                      <img
+                        loading="lazy"
+                        src={
+                          user.avatarUrl
+                            ? `https://graduation.amiralsayed.me${user.avatarUrl}`
+                            : ProfileImage
+                        }
+                        alt={user.localUserName}
+                        className="search-avatar"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = ProfileImage;
+                        }}
+                      />
+                      <div className="user-info">
+                        <div className="user-name">{user.localUserName}</div>
+                        <div className="user-username">@{user.userName}</div>
+                        {user.bio && <div className="user-bio">{user.bio}</div>}
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
                 <div className="see-all-results">See all results</div>
               </>

@@ -13,11 +13,12 @@ function formatUsername(username) {
   return formattedUsername.replace(/\d+$/, "");
 }
 
-const ProfileCard = ({ location }) => {
+const ProfileCard = ({ location, user }) => {
   const { userData } = useAuth();
-  if (!userData) return <p>Loading...</p>;
-
+  const profileUser = user || userData;
   const isProfilePage = location === "profilePage";
+  if (!profileUser) return <p>Loading...</p>;
+  if (!userData) return <p>Loading...</p>;
 
   return (
     <div className={`ProfileCard ${isProfilePage ? "profilePage" : ""}`}>
@@ -25,8 +26,8 @@ const ProfileCard = ({ location }) => {
         <img
           loading="lazy"
           src={
-            userData.coverUrl
-              ? `https://graduation.amiralsayed.me${userData.coverUrl}`
+            profileUser.coverUrl
+              ? `https://graduation.amiralsayed.me${profileUser.coverUrl}`
               : Cover
           }
           alt="Cover"
@@ -40,8 +41,8 @@ const ProfileCard = ({ location }) => {
           <img
             loading="lazy"
             src={
-              userData.avatarUrl
-                ? `https://graduation.amiralsayed.me${userData.avatarUrl}`
+              profileUser.avatarUrl
+                ? `https://graduation.amiralsayed.me${profileUser.avatarUrl}`
                 : ProfileImage
             }
             alt="Profile"
@@ -55,15 +56,24 @@ const ProfileCard = ({ location }) => {
       </div>
 
       <div className="ProfileName">
-        <span>{formatUsername(userData.localUserName)}</span>
-        <span>{userData.bio || "No bio available"}</span>
+        {isProfilePage ? (
+          <span>{formatUsername(profileUser.localUserName)}</span>
+        ) : (
+          <Link
+            to={`/users/${profileUser.centralUsrId}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <span>{formatUsername(profileUser.localUserName)}</span>
+          </Link>
+        )}
+        <span>{profileUser.bio || "No bio available"}</span>
       </div>
 
       <div className="followStatus">
         <hr />
         <div>
           <div className="follow">
-            <span>{userData.friends.length}</span>
+            <span>{profileUser.friends?.length ?? 0}</span>
             <span>Friends</span>
           </div>
 
@@ -71,7 +81,7 @@ const ProfileCard = ({ location }) => {
             <>
               <div className="vl"></div>
               <div className="follow">
-                <span>{userData.posts.length}</span>
+                <span>{profileUser.posts?.length ?? 0}</span>
                 <span>Posts</span>
               </div>
             </>

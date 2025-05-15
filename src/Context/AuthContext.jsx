@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
     onSuccess: (data) => {
       setUser((prev) => ({
         ...prev,
-        ...data.user, // نضيف كل بيانات المستخدم
+        ...data, // نضيف كل بيانات المستخدم
       }));
     },
     onError: () => logout(), // تسجيل الخروج إذا فشل الجلب
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
         }
       );
   
-      setUser({ token, userId, ...data.user }); // حفظ كل البيانات داخل user
+      setUser({ token, userId, ...data }); // حفظ كل البيانات داخل user
       queryClient.invalidateQueries(["userProfile"]);
       queryClient.invalidateQueries(["users"]);
     } catch (error) {
