@@ -119,6 +119,15 @@ const UsersTable = () => {
                       ? "Updating..."
                       : "Change"}
                   </button>
+                  <button
+                    onClick={() => handleChangeClick(user._id)}
+                    disabled={mutation.isLoading}
+                  >
+                    {mutation.isLoading &&
+                    mutation.variables?.userId === user._id
+                      ? "Deleting..."
+                      : "Delete"}
+                  </button>
                 </td>
               </tr>
             ))}

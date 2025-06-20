@@ -133,7 +133,7 @@ button {
   right: 0;
   background: var(--backgroundCard);
   border-radius: 8px;
-  box-shadow: var(--shadowLight);
+  /* box-shadow: var(--shadowLight); */
   padding: 10px;
   width: 200px;
   z-index: 1000;

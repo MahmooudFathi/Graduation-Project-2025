@@ -15,7 +15,7 @@
   background-color: var(--backgroundCard);
   border-radius: 10px;
   margin-top: 1rem;
-  box-shadow: var(--shadowLight);
+  /* box-shadow: var(--shadowLight); */
 }
 .loader {
   display: flex;

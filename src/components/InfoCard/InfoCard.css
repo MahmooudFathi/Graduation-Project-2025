@@ -6,7 +6,7 @@
   padding: 1rem;
   border-radius: 1rem;
   width: 90%;
-  box-shadow: var(--shadowLight);
+  /* box-shadow: var(--shadowLight); */
 }
 
 .infoHead {

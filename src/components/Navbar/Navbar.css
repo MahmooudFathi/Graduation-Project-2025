@@ -6,7 +6,7 @@
   background-color: var(--backgroundCard);
   padding: 1rem;
   border-radius: 1rem;
-  box-shadow: var(--shadowLight);
+  /* box-shadow: var(--shadowLight); */
 }
 
 .Navbar .icon {
@@ -16,7 +16,7 @@
 }
 .Navbar .icon:hover {
   color: var(--deepBlue);
-  transform: scale(1.1);
+  transform: scale(1.5);
   transition: all 0.2s ease;
 }
 body.dark .Navbar .icon:hover {
@@ -39,6 +39,10 @@ body.dark .Navbar .icon:hover {
   padding: 0.4rem 0.6rem;
   border: none;
 }
+.active-icon{
+  transform: scale(1.5);
+  transition: all 0.2s ease;
+}
 
 .dark-mode-toggle:hover {
   background: var(--backgroundInput);
@@ -53,7 +57,7 @@ body.dark .Navbar .icon:hover {
     z-index: 100;
     margin-bottom: 1rem;
     border-radius: 0rem;
-    box-shadow: var(--shadowLight);
+    /* box-shadow: var(--shadowLight); */
     background-color: var(--backgroundCard);
   }
 }

@@ -3,7 +3,7 @@
   background-color: var(--backgroundCard);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: var(--shadowLight);
+  /* box-shadow: var(--shadowLight); */
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
@@ -64,6 +64,7 @@ td select:focus {
 
 td button {
   padding: 8px 12px;
+  margin: .3rem;
   background-color: var(--textPrimary);
   color: #fff;
   border: none;
@@ -74,7 +75,7 @@ td button {
 }
 
 td button:hover {
-  background-color: var(--backgroundInput);
+  background-color: rgba(154, 203, 208, 0.9);
 }
 
 /* Responsive Styles */

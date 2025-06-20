@@ -6,7 +6,7 @@ import { IoIosNotifications } from "react-icons/io";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { RiSettings5Fill } from "react-icons/ri";
 import { FaCity } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ProfileModal from "../ProfileModal/ProfileModal";
 import { GiTeamUpgrade } from "react-icons/gi";
 import { useColorMode, Button } from "@chakra-ui/react";
@@ -17,7 +17,8 @@ const Navbar = () => {
   const [isTablet, setIsTablet] = useState(window.innerWidth <= 768);
   const { colorMode, toggleColorMode } = useColorMode(); // ← hook الوضع
   const { userData } = useAuth();
-
+  const location = useLocation();
+  const currentPath = location.pathname;
   useEffect(() => {
     const handleResize = () => {
       setIsTablet(window.innerWidth <= 768);
@@ -51,19 +52,30 @@ const Navbar = () => {
         </Link>
       )}
       <Link to="/">
-        <GoHomeFill className="icon icon-fill" />
+        <GoHomeFill
+          className={`icon icon-fill ${
+            currentPath === "/" ? "active-icon" : ""
+          }`}
+        />
       </Link>
       <Link to="/city">
-        <FaCity className="icon" />
+        <FaCity
+          className={`icon ${currentPath === "/city" ? "active-icon" : ""}`}
+        />
       </Link>
       <BiSolidMessageSquareDetail className="icon" />
       <IoIosNotifications className="icon" />
       {userData?.role !== "user" && (
         <Link to="/role">
-          <GiTeamUpgrade className="icon" />
+          <GiTeamUpgrade
+            className={`icon ${currentPath === "/role" ? "active-icon" : ""}`}
+          />
         </Link>
       )}
-      <RiSettings5Fill className="icon" onClick={() => setModalOpened(true)} />
+      <RiSettings5Fill
+        className={`icon ${currentPath === "/settings" ? "active-icon" : ""}`}
+        onClick={() => setModalOpened(true)}
+      />
       <Button
         size="sm"
         onClick={toggleColorMode}

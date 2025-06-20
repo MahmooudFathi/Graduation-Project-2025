@@ -10,7 +10,7 @@
   margin-top: 0rem;
   display: flex;
   justify-content: space-between;
-  box-shadow: var(--shadowLight);
+  /* box-shadow: var(--shadowLight); */
 }
 
 .r-button {

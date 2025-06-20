@@ -7,7 +7,7 @@
   flex-direction: column;
   font-size: 13px;
   background-color: var(--backgroundCard);
-  box-shadow: var(--shadowLight);
+  /* box-shadow: var(--shadowLight); */
 }
 
 .follower {

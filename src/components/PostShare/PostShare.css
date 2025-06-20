@@ -4,7 +4,7 @@
   background-color: var(--backgroundCard);
   padding: 1rem;
   border-radius: 1rem;
-  box-shadow: var(--shadowLight);
+  /* box-shadow: var(--shadowLight); */
 }
 
 .PostShare > img {

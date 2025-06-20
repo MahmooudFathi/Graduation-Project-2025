@@ -102,7 +102,7 @@
 .authForm {
   border-radius: 1rem;
   padding: 1.5rem;
-  box-shadow: var(--shadowLight);
+  /* box-shadow: var(--shadowLight); */
   width: 100%;
   max-width: 400px;
 }

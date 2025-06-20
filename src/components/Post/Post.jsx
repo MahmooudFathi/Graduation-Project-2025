@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 
 const Post = ({ data }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -27,7 +28,7 @@ const Post = ({ data }) => {
   );
 
   const userId = localStorage.getItem("userId");
-
+  const { userData } = useAuth();
   const [shared, setShared] = useState(data.shareList.includes(userId));
   const [shareCount, setShareCount] = useState(data.shareCount);
   const [shareList, setShareList] = useState(data.shareList || []);
@@ -330,15 +331,21 @@ const Post = ({ data }) => {
                       <HiOutlineSave className="icon" />
                       {isSaved ? "UnSave" : "Save"}
                     </div>
-                    <div className="menu-item" onClick={handleUpdateClick}>
-                      <FaPen className="icon" /> Edit
-                    </div>
+                    {data.author === userData.centralUsrId && (
+                      <>
+                        <div className="menu-item" onClick={handleUpdateClick}>
+                          <FaPen className="icon" /> Edit
+                        </div>
+                        <div
+                          className="menu-item"
+                          onClick={() => deletePostMutation.mutate()}
+                        >
+                          <IoClose className="icon" /> Delete
+                        </div>
+                      </>
+                    )}
                   </div>
                 )}
-                <IoClose
-                  className="icon"
-                  onClick={() => deletePostMutation.mutate()}
-                />
               </div>
             </div>
             <div className="p-date">{format(data.createdAt)}</div>
