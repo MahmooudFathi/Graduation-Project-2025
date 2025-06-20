@@ -20,7 +20,7 @@
   transition: all 0.3s ease;
 }
 
-/* Overlay container for the blur effect */
+/* Overlay container for the blur effect
 .Search::before {
   content: "";
   position: fixed;
@@ -34,7 +34,7 @@
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
   pointer-events: none;
-}
+} */
 
 /* Show the overlay when focused */
 .Search:focus-within::before {

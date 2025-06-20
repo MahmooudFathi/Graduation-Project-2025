@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import ProfileImage from "../../img/pngtree-male-avatar-vector-icon-png-image_691612.jpg";
 import "./UsersTable.css";
+import { Link } from "react-router-dom";
 
 const UsersTable = () => {
   const { usersData, user } = useAuth();
@@ -77,26 +78,32 @@ const UsersTable = () => {
             {usersData?.map((user) => (
               <tr key={user._id}>
                 <td data-label="Avatar">
-                  <img
-                    loading="lazy"
-                    src={
-                      user.avatarUrl
-                        ? `https://graduation.amiralsayed.me${user.avatarUrl}`
-                        : ProfileImage
-                    }
-                    alt="avatar"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = ProfileImage;
-                    }}
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "50%",
-                    }}
-                  />
+                  <Link to={`/user/${user.centralUsrId}`} key={user._id}>
+                    <img
+                      loading="lazy"
+                      src={
+                        user.avatarUrl
+                          ? `https://graduation.amiralsayed.me${user.avatarUrl}`
+                          : ProfileImage
+                      }
+                      alt="avatar"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = ProfileImage;
+                      }}
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </Link>
                 </td>
-                <td data-label="Local Username">{user.localUserName}</td>
+                <td data-label="Local Username">
+                  <Link to={`/user/${user.centralUsrId}`} key={user._id}>
+                    {user.localUserName}
+                  </Link>
+                </td>
                 <td data-label="ُEmail">{user.email}</td>
                 <td data-label="Bio">{user.bio}</td>
                 <td data-label="Role">
