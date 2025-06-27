@@ -1,0 +1,125 @@
+/* ChatHeader.css */
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background-color: #3c3c3c;
+  border-bottom: 1px solid #555;
+  color: white;
+  min-height: 60px;
+}
+
+.chat-header-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-avatar-container {
+  position: relative;
+}
+
+.chat-header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chat-online-indicator {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  background-color: #28a745;
+  border-radius: 50%;
+  border: 2px solid #3c3c3c;
+}
+
+.chat-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chat-header-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #d4ac0d;
+}
+
+.chat-header-status {
+  margin: 0;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-action-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.chat-action-btn:hover {
+  background-color: #555;
+  color: white;
+}
+
+.chat-close-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  margin-left: 8px;
+}
+
+.chat-close-btn:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chat-header {
+    padding: 8px 16px;
+  }
+  
+  .chat-header-name {
+    font-size: 14px;
+  }
+  
+  .chat-action-btn,
+  .chat-close-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+}

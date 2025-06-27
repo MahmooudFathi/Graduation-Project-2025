@@ -6,6 +6,7 @@ import Auth from "./Pages/Auth/Auth";
 import Profile from "./Pages/Profile/Profile";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import Role from "./Pages/Role/Role";
+import Chat from "./Pages/Chat/Chat";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { isTokenExpired } from "./checkTokenExpiration";
@@ -46,6 +47,10 @@ function App() {
           <Route
             path="/profile"
             element={isAuthenticated ? <Profile /> : <Navigate to="/auth" />}
+          />
+          <Route
+            path="/chat"
+            element={isAuthenticated ? <Chat /> : <Navigate to="/auth" />}
           />
           <Route path="/user/:userId" element={isAuthenticated ? <UserProfile /> : <Navigate to="/auth" />} />
           <Route path="/auth" element={<Auth />} />

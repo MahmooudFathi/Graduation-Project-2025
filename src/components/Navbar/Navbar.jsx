@@ -63,8 +63,14 @@ const Navbar = () => {
           className={`icon ${currentPath === "/city" ? "active-icon" : ""}`}
         />
       </Link>
-      <BiSolidMessageSquareDetail className="icon" />
-      <IoIosNotifications className="icon" />
+      <Link to="/chat">
+        <BiSolidMessageSquareDetail
+          className={`icon ${currentPath === "/chat" ? "active-icon" : ""}`}
+        />
+      </Link>
+      <IoIosNotifications
+        className={`icon ${currentPath === "/note" ? "active-icon" : ""}`}
+      />
       {userData?.role !== "user" && (
         <Link to="/role">
           <GiTeamUpgrade
